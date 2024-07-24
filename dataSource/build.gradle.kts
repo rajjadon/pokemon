@@ -48,4 +48,15 @@ dependencies {
     // hilt
     api(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
+
+    // retrofit
+    api(libs.retrofit)
+    api(libs.okhttp)
+    api(libs.okhttp.logging.interceptor)
+    api(libs.okhttp.urlconnection)
+
+    // room
+    api(libs.room.ktx)
+    api(libs.room.runtime)
+    annotationProcessor(libs.room.compiler)
 }

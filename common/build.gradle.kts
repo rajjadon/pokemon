@@ -58,4 +58,7 @@ dependencies {
     api(libs.viewmodel.ktx)
     api(libs.runtime.compose)
     api(libs.navigation.compose)
+
+    //json converter
+    api(libs.converter.gson)
 }
