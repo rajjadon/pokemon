@@ -20,5 +20,5 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "pokemon"
-include(":app")
+include(":pokemon")
  
