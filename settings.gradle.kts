@@ -21,4 +21,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "pokemon"
 include(":pokemon")
- 
+include(":common")
+include(":domain")
+include(":data")
+include(":presentation")
