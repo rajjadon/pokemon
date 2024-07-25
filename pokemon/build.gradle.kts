@@ -41,6 +41,9 @@ android {
             buildConfigField("String", "POKEMON_LIST", "${project.properties["POKEMON_LIST"]}")
         }
     }
+    buildFeatures{
+        compose = true
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
