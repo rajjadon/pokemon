@@ -30,11 +30,15 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String", "BASE_URL", "${project.properties["BASE_URL"]}")
+            buildConfigField("String", "POKEMON_LIST", "${project.properties["POKEMON_LIST"]}")
         }
 
         debug {
             isDebuggable = true
             isMinifyEnabled = false
+            buildConfigField("String", "BASE_URL", "${project.properties["BASE_URL"]}")
+            buildConfigField("String", "POKEMON_LIST", "${project.properties["POKEMON_LIST"]}")
         }
     }
     compileOptions {
@@ -46,6 +50,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"

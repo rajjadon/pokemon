@@ -61,4 +61,7 @@ dependencies {
 
     //json converter
     api(libs.converter.gson)
+
+    //room
+    implementation(libs.room.ktx)
 }

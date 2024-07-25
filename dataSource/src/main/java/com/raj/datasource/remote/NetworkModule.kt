@@ -27,7 +27,6 @@ object NetworkModule {
     fun provideRetrofit(
         @ApplicationContext application: Context,
         @ApiQualifier(ApiConstantEnum.BASE_URL) baseUrl: String,
-        authInterceptor: AuthInterceptor
     ): Retrofit.Builder {
         return Retrofit.Builder().baseUrl(baseUrl)
             .client(OkHttpClient().newBuilder().apply {
@@ -52,7 +51,6 @@ object NetworkModule {
                             .header("Cache-Control", "public, max-age=" + 60).build()
                     )
                 }
-                addInterceptor(authInterceptor)
             }.build())
             .addConverterFactory(GsonConverterFactory.create())
     }

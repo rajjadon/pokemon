@@ -1,28 +1,26 @@
 package com.raj.datasource.local
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
-import androidx.room.OnConflictStrategy.Companion.IGNORE
-import androidx.room.OnConflictStrategy.Companion.REPLACE
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Update
 import com.raj.datasource.model.RoomDbPokemon
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PokemonDao {
-    @Insert(onConflict = IGNORE)
-    suspend fun insert(roomDbPokemon: RoomDbPokemon)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(pokemonDetails: List<RoomDbPokemon>)
 
-    @Query("DELETE FROM POKEMON_TABLE")
+    @Delete
+    suspend fun delete(pokemonDetails: RoomDbPokemon)
+
+    @Query("SELECT * FROM POKEMON WHERE id = :id")
+    suspend fun getPokemonDetailsById(id: String): RoomDbPokemon?
+
+    @Query("SELECT * FROM POKEMON")
+    suspend fun getAllPokemonDetails(): List<RoomDbPokemon>
+
+    @Query("DELETE FROM POKEMON")
     suspend fun deleteAll()
-
-    @Query("DELETE FROM POKEMON_TABLE WHERE id = :id")
-    suspend fun delete(id: String)
-
-    @Query("SELECT * FROM POKEMON_TABLE")
-    fun getAllPokemon(): Flow<List<RoomDbPokemon>>
-
-    @Update(onConflict = REPLACE)
-    suspend fun update(roomDbPokemon: RoomDbPokemon)
 }
