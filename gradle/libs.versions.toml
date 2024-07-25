@@ -69,7 +69,7 @@ room-runtime = {group = "androidx.room", name="room-runtime", version.ref="room_
 room-ktx = {group = "androidx.room", name="room-ktx", version.ref="room_version"}
 room-compiler = {group = "androidx.room", name="room-compiler", version.ref="room_version"}
 
-# glide
+# Glide
 glide = {group="com.github.bumptech.glide", name="compose", version.ref="glide-version"}
 
 [plugins]
