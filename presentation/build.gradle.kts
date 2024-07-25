@@ -38,6 +38,7 @@ dependencies {
 
     api(project(":domain"))
 
+    implementation(libs.glide)
     api(libs.androidx.appcompat)
     api(libs.material)
     testImplementation(libs.junit)

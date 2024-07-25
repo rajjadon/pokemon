@@ -42,30 +42,3 @@ sealed class NavigationScreens(
         }
     }
 }
-
-@Composable
-fun NavigationGraph(
-    navController: NavHostController, items: List<NavigationScreens> = listOf(
-        NavigationScreens.HomeScreen, NavigationScreens.DetailsScreen
-    )
-) {
-    NavHost(navController, startDestination = NavigationScreens.HomeScreen.route) {
-        composable(NavigationScreens.HomeScreen.route) {
-            //val homeViewModel: HomeViewModel = hiltViewModel()
-            //homeViewModel.getMovieList()
-            //HomeScreen(homeViewModel)
-        }
-        composable(
-            route = NavigationScreens.DetailsScreen.route + "/{name}",
-            arguments = listOf(
-                navArgument("name") {
-                    type = NavType.StringType
-                    defaultValue = "Some Default"
-                    nullable = true
-                }
-            )
-        ) { entry ->
-            //DetailScreen(name = entry.arguments?.getString("name"))
-        }
-    }
-}

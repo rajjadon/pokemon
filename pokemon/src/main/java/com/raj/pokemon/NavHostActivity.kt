@@ -3,47 +3,54 @@ package com.raj.pokemon
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.raj.pokemon.navigation.NavigationScreens
 import com.raj.pokemon.ui.theme.PokemonTheme
+import com.raj.presentation.home.HomeScreen
+import com.raj.presentation.home.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class NavHostActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
-            PokemonTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+            PokemonTheme  {
+                NavigationGraph()
             }
         }
     }
-}
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    PokemonTheme {
-        Greeting("Android")
+    @Preview
+    @Composable
+    fun NavigationGraph() {
+        val navController = rememberNavController()
+        NavHost(navController, startDestination = NavigationScreens.HomeScreen.route) {
+            composable(NavigationScreens.HomeScreen.route) {
+                val homeViewModel: HomeViewModel = hiltViewModel()
+                homeViewModel.fetchPokemon()
+                HomeScreen(homeViewModel)
+            }
+            composable(
+                route = NavigationScreens.DetailsScreen.route + "/{name}",
+                arguments = listOf(
+                    navArgument("name") {
+                        type = NavType.StringType
+                        defaultValue = "Some Default"
+                        nullable = true
+                    }
+                )
+            ) { entry ->
+                //DetailScreen(name = entry.arguments?.getString("name"))
+            }
+        }
     }
 }
