@@ -58,5 +58,6 @@ dependencies {
     // room
     api(libs.room.ktx)
     api(libs.room.runtime)
-    annotationProcessor(libs.room.compiler)
+    //noinspection KaptUsageInsteadOfKsp
+    kapt(libs.room.compiler)
 }
