@@ -31,30 +31,30 @@ data class PokemonDetails(
 )
 
 data class PokemonWeakness(
-    val type: String,
-    val value: String
+    val type: String? = null,
+    val value: String? = null
 )
 
 data class PokemonImage(
-    val large: String,
-    val small: String
+    val large: String? = null,
+    val small: String? = null
 )
 
 data class PokemonAttack(
-    val convertedEnergyCost: Int,
-    val cost: List<String>,
-    val damage: String,
-    val name: String,
-    val text: String
+    val convertedEnergyCost: Int? = null,
+    val cost: List<String>? = null,
+    val damage: String? = null,
+    val name: String? = null,
+    val text: String? = null
 )
 
 data class PokemonAbility(
-    val name: String,
-    val text: String,
-    val type: String
+    val name: String? = null,
+    val text: String? = null,
+    val type: String? = null
 )
 
 data class PokemonResistance(
-    val type: String,
-    val value: String
+    val type: String? = null,
+    val value: String? = null
 )

@@ -8,6 +8,7 @@ import com.raj.datasource.remote.network.networkHelper.NetworkHelper
 import com.raj.domain.repo.PokemonRepo
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.internal.ChannelFlow
@@ -28,7 +29,7 @@ class PokemonRepoImpl @Inject constructor(
 
         data.onEach {
             emit(it)
-        }
+        }.collect()
     }
 
     override suspend fun getAllPokemonDetails(): Flow<DataState<List<PokemonDetails>>>  = flow{
@@ -41,6 +42,6 @@ class PokemonRepoImpl @Inject constructor(
 
         data.onEach {
             emit(it)
-        }
+        }.collect()
     }
 }

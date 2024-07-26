@@ -8,33 +8,33 @@ import com.raj.common.model.PokemonResistance
 import com.raj.common.model.PokemonWeakness
 
 data class PokemonApiData(
-    val abilities: List<Ability>,
-    val artist: String,
-    val attacks: List<Attack>,
-    val cardmarket: Cardmarket,
-    val convertedRetreatCost: Int,
-    val evolvesFrom: String,
-    val evolvesTo: List<String>,
-    val flavorText: String,
-    val hp: String,
+    val abilities: List<Ability>? = null,
+    val artist: String? = null,
+    val attacks: List<Attack>? = null,
+    val cardmarket: Cardmarket? = null,
+    val convertedRetreatCost: Int? = null,
+    val evolvesFrom: String? = null,
+    val evolvesTo: List<String>? = null,
+    val flavorText: String? = null,
+    val hp: String? = null,
     val id: String,
-    val images: Images,
-    val legalities: Legalities,
-    val level: String,
-    val name: String,
-    val nationalPokedexNumbers: List<Int>,
-    val number: String,
-    val rarity: String,
-    val regulationMark: String,
-    val resistances: List<Resistance>,
-    val retreatCost: List<String>,
-    val rules: List<String>,
-    val `set`: Set,
-    val subtypes: List<String>,
-    val supertype: String,
-    val tcgplayer: Tcgplayer,
-    val types: List<String>,
-    val weaknesses: List<Weaknesse>
+    val images: Images? = null,
+    val legalities: Legalities? = null,
+    val level: String? = null,
+    val name: String? = null,
+    val nationalPokedexNumbers: List<Int>? = null,
+    val number: String? = null,
+    val rarity: String? = null,
+    val regulationMark: String? = null,
+    val resistances: List<Resistance>? = null,
+    val retreatCost: List<String>? = null,
+    val rules: List<String>? = null,
+    val `set`: Set? = null,
+    val subtypes: List<String>? = null,
+    val supertype: String? = null,
+    val tcgplayer: Tcgplayer? = null,
+    val types: List<String>? = null,
+    val weaknesses: List<Weaknesse>? = null
 ){
     fun mapPokemonApiDataToPokemonDetails(): PokemonDetails {
         return PokemonDetails(
@@ -44,8 +44,8 @@ data class PokemonApiData(
             subType = this.subtypes,
             level = this.level,
             hp = this.hp,
-            image = this.images.let { PokemonImage(it.small, it.large) },
-            attack = this.attacks.map { attack ->
+            image = this.images.let { PokemonImage(it?.small, it?.large) },
+            attack = this.attacks?.map { attack ->
                 PokemonAttack(
                     convertedEnergyCost = attack.convertedEnergyCost,
                     name = attack.name,
@@ -54,20 +54,20 @@ data class PokemonApiData(
                     cost = attack.cost
                 )
             },
-            weakness = this.weaknesses.map { weakness ->
+            weakness = this.weaknesses?.map { weakness ->
                 PokemonWeakness(
                     type = weakness.type,
                     value = weakness.value
                 )
             },
-            ability = this.abilities.map { ability ->
+            ability = this.abilities?.map { ability ->
                 PokemonAbility(
                     name = ability.name,
                     text = ability.text,
                     type = ability.type
                 )
             },
-            resistances = this.resistances.map { resistance ->
+            resistances = this.resistances?.map { resistance ->
                 PokemonResistance(
                     type = resistance.type,
                     value = resistance.value
@@ -78,131 +78,131 @@ data class PokemonApiData(
 }
 
 data class Ability(
-    val name: String,
-    val text: String,
-    val type: String
+    val name: String? = null,
+    val text: String? = null,
+    val type: String? = null
 )
 
 data class Attack(
-    val convertedEnergyCost: Int,
-    val cost: List<String>,
-    val damage: String,
-    val name: String,
-    val text: String
+    val convertedEnergyCost: Int? = null,
+    val cost: List<String>? = null,
+    val damage: String? = null,
+    val name: String? = null,
+    val text: String? = null
 )
 
 data class Cardmarket(
-    val prices: Prices,
-    val updatedAt: String,
-    val url: String
+    val prices: Prices? = null,
+    val updatedAt: String? = null,
+    val url: String? = null
 )
 
 data class Images(
-    val large: String,
-    val small: String
+    val large: String? = null,
+    val small: String? = null
 )
 
 data class Legalities(
-    val expanded: String,
-    val unlimited: String
+    val expanded: String? = null,
+    val unlimited: String? = null
 )
 
 data class Resistance(
-    val type: String,
-    val value: String
+    val type: String? = null,
+    val value: String? = null
 )
 
 data class Set(
-    val id: String,
-    val images: ImagesX,
-    val legalities: Legalities,
-    val name: String,
-    val printedTotal: Int,
-    val ptcgoCode: String,
-    val releaseDate: String,
-    val series: String,
-    val total: Int,
-    val updatedAt: String
+    val id: String? = null,
+    val images: ImagesX? = null,
+    val legalities: Legalities? = null,
+    val name: String? = null,
+    val printedTotal: Int? = null,
+    val ptcgoCode: String? = null,
+    val releaseDate: String? = null,
+    val series: String? = null,
+    val total: Int? = null,
+    val updatedAt: String? = null
 )
 
 data class Tcgplayer(
-    val prices: PricesX,
-    val updatedAt: String,
-    val url: String
+    val prices: PricesX? = null,
+    val updatedAt: String? = null,
+    val url: String? = null
 )
 
 data class Weaknesse(
-    val type: String,
-    val value: String
+    val type: String? = null,
+    val value: String? = null
 )
 
 data class Prices(
-    val averageSellPrice: Double,
-    val avg1: Double,
-    val avg30: Double,
-    val avg7: Double,
-    val germanProLow: Int,
-    val lowPrice: Double,
-    val lowPriceExPlus: Double,
-    val reverseHoloAvg1: Double,
-    val reverseHoloAvg30: Double,
-    val reverseHoloAvg7: Double,
-    val reverseHoloLow: Double,
-    val reverseHoloSell: Double,
-    val reverseHoloTrend: Double,
-    val suggestedPrice: Int,
-    val trendPrice: Double
+    val averageSellPrice: Double? = null,
+    val avg1: Double? = null,
+    val avg30: Double? = null,
+    val avg7: Double? = null,
+    val germanProLow: Int? = null,
+    val lowPrice: Double? = null,
+    val lowPriceExPlus: Double? = null,
+    val reverseHoloAvg1: Double? = null,
+    val reverseHoloAvg30: Double? = null,
+    val reverseHoloAvg7: Double? = null,
+    val reverseHoloLow: Double? = null,
+    val reverseHoloSell: Double? = null,
+    val reverseHoloTrend: Double? = null,
+    val suggestedPrice: Int? = null,
+    val trendPrice: Double? = null
 )
 
 data class ImagesX(
-    val logo: String,
-    val symbol: String
+    val logo: String? = null,
+    val symbol: String? = null
 )
 
 data class PricesX(
-    val `1stEditionHolofoil`: StEditionHolofoil,
-    val holofoil: Holofoil,
-    val normal: Normal,
-    val reverseHolofoil: ReverseHolofoil,
-    val unlimitedHolofoil: UnlimitedHolofoil
+    val `1stEditionHolofoil`: StEditionHolofoil? = null,
+    val holofoil: Holofoil? = null,
+    val normal: Normal? = null,
+    val reverseHolofoil: ReverseHolofoil? = null,
+    val unlimitedHolofoil: UnlimitedHolofoil? = null
 )
 
 data class StEditionHolofoil(
-    val directLow: Double,
-    val high: Double,
-    val low: Double,
-    val market: Double,
-    val mid: Double
+    val directLow: Double? = null,
+    val high: Double? = null,
+    val low: Double? = null,
+    val market: Double? = null,
+    val mid: Double? = null
 )
 
 data class Holofoil(
-    val directLow: Double,
-    val high: Double,
-    val low: Double,
-    val market: Double,
-    val mid: Double
+    val directLow: Double? = null,
+    val high: Double? = null,
+    val low: Double? = null,
+    val market: Double? = null,
+    val mid: Double? = null
 )
 
 data class Normal(
-    val directLow: Double,
-    val high: Double,
-    val low: Double,
-    val market: Double,
-    val mid: Double
+    val directLow: Double? = null,
+    val high: Double? = null,
+    val low: Double? = null,
+    val market: Double? = null,
+    val mid: Double? = null
 )
 
 data class ReverseHolofoil(
-    val directLow: Double,
-    val high: Double,
-    val low: Double,
-    val market: Double,
-    val mid: Double
+    val directLow: Double? = null,
+    val high: Double? = null,
+    val low: Double? = null,
+    val market: Double? = null,
+    val mid: Double? = null
 )
 
 data class UnlimitedHolofoil(
-    val directLow: Double,
-    val high: Double,
-    val low: Double,
-    val market: Double,
-    val mid: Double
+    val directLow: Double? = null,
+    val high: Double? = null,
+    val low: Double? = null,
+    val market: Double? = null,
+    val mid: Double? = null
 )
