@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -45,12 +46,15 @@ fun HomeScreenItem(pokemonDetails: PokemonDetails, onClick: () -> Unit = {}) {
     ) {
 
         Box(contentAlignment = Alignment.BottomEnd) {
-            val image = pokemonDetails.image?.large ?: run { pokemonDetails.image?.small ?: run { Icons.Filled.Face } }
+            val image = pokemonDetails.image?.large ?: pokemonDetails.image?.small ?: Icons.Filled.Face
+
             GlideImage(
                 model = image,
                 contentDescription = "pokemon banner",
                 modifier = Modifier
-                    .clip(shape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp))
+                    .fillMaxWidth() // Ensures the image takes the full width
+                    .clip(shape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp)),
+                contentScale = ContentScale.Crop // Adjust this as needed
             )
         }
 
@@ -82,15 +86,15 @@ fun HomeScreenItem(pokemonDetails: PokemonDetails, onClick: () -> Unit = {}) {
                     ),
                 style = TextStyle(
                     color = Color.White,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Normal
                 )
             )
         }
 
         pokemonDetails.level?.let {
             Text(
-                text = ":Level: $it",
+                text = "Level: $it",
                 maxLines = 1,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -99,8 +103,8 @@ fun HomeScreenItem(pokemonDetails: PokemonDetails, onClick: () -> Unit = {}) {
                     ),
                 style = TextStyle(
                     color = Color.White,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Normal
                 )
             )
         }
@@ -115,7 +119,7 @@ fun HomeScreenItem(pokemonDetails: PokemonDetails, onClick: () -> Unit = {}) {
                     ),
                 style = TextStyle(
                     color = Color.White,
-                    fontSize = 16.sp,
+                    fontSize = 12.sp,
                     fontWeight = FontWeight.Normal
                 )
             )
@@ -169,7 +173,7 @@ fun ErrorUi(@PreviewParameter(SampleNetworkErrorProvider::class) pokemonAppError
 
 @Composable
 @Preview
-fun LoadingUi(loadingMessage: String = "Loading data please wait") {
+fun LoadingUi() {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -180,21 +184,6 @@ fun LoadingUi(loadingMessage: String = "Loading data please wait") {
     ) {
         CircularProgressIndicator(
             color = Color.Black
-        )
-
-        Text(
-            text = loadingMessage,
-            textAlign = TextAlign.Center,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    start = 10.dp, bottom = 16.dp
-                ),
-            style = TextStyle(
-                color = Color.Black,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Normal
-            )
         )
     }
 }
