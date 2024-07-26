@@ -29,16 +29,4 @@ open class BaseViewModel : ViewModel() {
             }
         }
     }
-
-    fun sendError(pokemonAppError: PokemonAppError) {
-        viewModelScope.launch {
-            _pokemonAppError.emit(pokemonAppError)
-        }
-    }
-
-    fun setLoading(isLoading: Boolean) {
-        viewModelScope.launch {
-            _loading.emit(isLoading)
-        }
-    }
 }
