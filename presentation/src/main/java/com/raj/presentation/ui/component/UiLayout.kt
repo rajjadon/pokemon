@@ -1,6 +1,5 @@
 package com.raj.presentation.ui.component
 
-import android.graphics.drawable.Icon
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -9,21 +8,24 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
@@ -40,21 +42,21 @@ import com.raj.common.model.PokemonDetails
 fun HomeScreenItem(pokemonDetails: PokemonDetails, onClick: () -> Unit = {}) {
     Column(
         modifier = Modifier
-            .padding(5.dp)
-            .background(color = Color.Black, shape = RoundedCornerShape(10.dp))
-            .clickable(onClick = onClick),
+            .padding(8.dp)
+            .background(color = MaterialTheme.colorScheme.surface, shape = RoundedCornerShape(10.dp))
+            .clickable(onClick = onClick)
+            .fillMaxWidth()
+            .height(250.dp),
     ) {
-
         Box(contentAlignment = Alignment.BottomEnd) {
-            val image = pokemonDetails.image?.large ?: pokemonDetails.image?.small ?: Icons.Filled.Face
-
             GlideImage(
-                model = image,
+                model = pokemonDetails.image?.large ?: pokemonDetails.image?.small ?: Icons.Default.Face,
                 contentDescription = "pokemon banner",
                 modifier = Modifier
-                    .fillMaxWidth() // Ensures the image takes the full width
+                    .fillMaxWidth()
+                    .height(150.dp)
                     .clip(shape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp)),
-                contentScale = ContentScale.Crop // Adjust this as needed
+                contentScale = ContentScale.Crop
             )
         }
 
@@ -62,15 +64,14 @@ fun HomeScreenItem(pokemonDetails: PokemonDetails, onClick: () -> Unit = {}) {
             Text(
                 text = "Name: $it",
                 maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(
-                        top = 10.dp, start = 10.dp
-                    ),
-                style = TextStyle(
-                    color = Color.White,
+                    .padding(horizontal = 10.dp, vertical = 4.dp),
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    color = MaterialTheme.colorScheme.onSurface,
                     fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = androidx.compose.ui.text.font.FontWeight.Bold
                 )
             )
         }
@@ -79,15 +80,13 @@ fun HomeScreenItem(pokemonDetails: PokemonDetails, onClick: () -> Unit = {}) {
             Text(
                 text = "Type: $it",
                 maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(
-                        top = 10.dp, start = 10.dp
-                    ),
-                style = TextStyle(
-                    color = Color.White,
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Normal
+                    .padding(horizontal = 10.dp, vertical = 2.dp),
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    color = MaterialTheme.colorScheme.onSurface,
+                    fontSize = 14.sp
                 )
             )
         }
@@ -96,31 +95,28 @@ fun HomeScreenItem(pokemonDetails: PokemonDetails, onClick: () -> Unit = {}) {
             Text(
                 text = "Level: $it",
                 maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(
-                        top = 10.dp, start = 10.dp
-                    ),
-                style = TextStyle(
-                    color = Color.White,
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Normal
+                    .padding(horizontal = 10.dp, vertical = 2.dp),
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    color = MaterialTheme.colorScheme.onSurface,
+                    fontSize = 14.sp
                 )
             )
         }
 
         pokemonDetails.hp?.let {
             Text(
-                text = "Hp: $it",
+                text = "HP: $it",
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(
-                        start = 10.dp, bottom = 16.dp
-                    ),
-                style = TextStyle(
-                    color = Color.White,
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Normal
+                    .padding(horizontal = 10.dp, vertical = 2.dp),
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    color = MaterialTheme.colorScheme.onSurface,
+                    fontSize = 14.sp
                 )
             )
         }
@@ -136,9 +132,10 @@ class SampleNetworkErrorProvider : PreviewParameterProvider<PokemonAppError> {
 fun ErrorUi(@PreviewParameter(SampleNetworkErrorProvider::class) pokemonAppError: PokemonAppError) {
     Column(
         modifier = Modifier
-            .background(color = Color.Gray)
+            .background(color = MaterialTheme.colorScheme.background)
             .fillMaxSize(),
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
             text = pokemonAppError.getNetworkErrorMessage(),
@@ -149,7 +146,7 @@ fun ErrorUi(@PreviewParameter(SampleNetworkErrorProvider::class) pokemonAppError
                     top = 16.dp, start = 10.dp
                 ),
             style = TextStyle(
-                color = Color.Black,
+                color = MaterialTheme.colorScheme.onBackground,
                 fontSize = 35.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -163,7 +160,7 @@ fun ErrorUi(@PreviewParameter(SampleNetworkErrorProvider::class) pokemonAppError
                     start = 10.dp, bottom = 16.dp
                 ),
             style = TextStyle(
-                color = Color.Black,
+                color = MaterialTheme.colorScheme.onBackground,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Normal
             )
@@ -178,12 +175,13 @@ fun LoadingUi() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
-            .background(color = Color.Gray)
+            .background(color = MaterialTheme.colorScheme.background)
             .fillMaxWidth()
             .fillMaxHeight()
     ) {
         CircularProgressIndicator(
-            color = Color.Black
+            color = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.size(50.dp)
         )
     }
 }

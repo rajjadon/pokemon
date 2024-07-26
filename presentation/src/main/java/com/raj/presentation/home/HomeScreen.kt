@@ -1,46 +1,30 @@
 package com.raj.presentation.home
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.raj.presentation.ui.component.ErrorUi
 import com.raj.presentation.ui.component.HomeScreenItem
 import com.raj.presentation.ui.component.LoadingUi
 
 @Composable
-fun HomeScreen(homeViewModel: HomeViewModel, onClick: () -> Unit = {}) {
-
+fun HomeScreen(homeViewModel: HomeViewModel, onClick: (String) -> Unit = {}) {
     val data by homeViewModel.pokemonList.collectAsState(initial = emptyList())
     val isLoading by homeViewModel.loading.collectAsState(initial = true)
     val isError by homeViewModel.pokemonAppError.collectAsState(initial = null)
     val searchQuery = remember { mutableStateOf(TextFieldValue("")) }
     val sortCriterion = remember { mutableStateOf("Name") }
-    val sortOptions = listOf("name", "hp")
+    val sortOptions = listOf("Name", "Hp")
 
     val filteredItems = if (searchQuery.value.text.isEmpty()) {
         data
@@ -49,12 +33,16 @@ fun HomeScreen(homeViewModel: HomeViewModel, onClick: () -> Unit = {}) {
     }.let { list ->
         when (sortCriterion.value) {
             "Name" -> list.sortedBy { it.name }
-            "Other" -> list.sortedBy { it.hp }
+            "Hp" -> list.sortedBy { it.hp }
             else -> list
         }
     }
 
-    Column(Modifier.background(color = Color.Gray)) {
+    Column(
+        modifier = Modifier
+            .background(color = MaterialTheme.colorScheme.background)
+            .fillMaxSize()
+    ) {
         Spacer(modifier = Modifier.statusBarsPadding())
         OutlinedTextField(
             value = searchQuery.value,
@@ -64,7 +52,16 @@ fun HomeScreen(homeViewModel: HomeViewModel, onClick: () -> Unit = {}) {
             label = { Text("Search") },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .padding(16.dp),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedTextColor = MaterialTheme.colorScheme.onBackground,
+                focusedContainerColor = MaterialTheme.colorScheme.surface,
+                cursorColor = MaterialTheme.colorScheme.onBackground,
+                focusedBorderColor = MaterialTheme.colorScheme.onBackground,
+                unfocusedBorderColor = MaterialTheme.colorScheme.onBackground,
+                focusedLabelColor = MaterialTheme.colorScheme.onBackground,
+                unfocusedLabelColor = MaterialTheme.colorScheme.onBackground
+            )
         )
 
         Row(
@@ -73,11 +70,16 @@ fun HomeScreen(homeViewModel: HomeViewModel, onClick: () -> Unit = {}) {
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
         ) {
-            Text(text = "Sort by: ", modifier = Modifier.padding(end = 8.dp))
+            Text(
+                text = "Sort by: ",
+                color = MaterialTheme.colorScheme.onBackground,
+                fontSize = 20.sp,
+                modifier = Modifier.padding(end = 8.dp)
+            )
             var expanded by remember { mutableStateOf(false) }
             Box {
                 TextButton(onClick = { expanded = true }) {
-                    Text(text = sortCriterion.value, textAlign = TextAlign.Start)
+                    Text(text = sortCriterion.value, color = MaterialTheme.colorScheme.onBackground, textAlign = TextAlign.Start)
                 }
                 DropdownMenu(
                     expanded = expanded,
@@ -99,11 +101,13 @@ fun HomeScreen(homeViewModel: HomeViewModel, onClick: () -> Unit = {}) {
             isLoading -> LoadingUi()
             isError != null -> isError?.let { ErrorUi(pokemonAppError = it) }
             else -> LazyVerticalGrid(
-                columns = GridCells.Fixed(3),
+                columns = GridCells.Fixed(2),
                 modifier = Modifier.padding(top = 10.dp)
             ) {
                 items(filteredItems) { pokemon ->
-                    HomeScreenItem(pokemon, onClick = onClick)
+                    HomeScreenItem(pokemon, onClick = {
+                        onClick.invoke(pokemon.id)
+                    })
                 }
             }
         }
