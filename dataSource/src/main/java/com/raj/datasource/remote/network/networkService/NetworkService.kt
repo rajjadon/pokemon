@@ -8,6 +8,6 @@ import retrofit2.http.GET
 
 interface NetworkService {
 
-    @GET(BuildConfig.POKEMON_LIST)
+    @GET("${BuildConfig.POKEMON_LIST}?pageSize=20")
     suspend fun getPokemonList(): BaseResponse<List<PokemonApiData>>
 }
