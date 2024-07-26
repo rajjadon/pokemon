@@ -99,7 +99,7 @@ fun HomeScreen(homeViewModel: HomeViewModel, onClick: (String) -> Unit = {}) {
 
         when {
             isLoading -> LoadingUi()
-            isError != null -> isError?.let { ErrorUi(pokemonAppError = it) }
+            isError != null -> isError?.let { ErrorUi(it) }
             else -> LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
                 modifier = Modifier.padding(top = 10.dp)

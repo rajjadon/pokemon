@@ -56,7 +56,7 @@ fun PokemonTheme(
     val view = LocalView.current
     if (!view.isInEditMode) {
         val activity = view.context as Activity
-        activity.window.statusBarColor = colorScheme.primary.toArgb()
+        activity.window.statusBarColor = colorScheme.background.toArgb()
         ViewCompat.getWindowInsetsController(view)?.isAppearanceLightStatusBars = !darkTheme
     }
 

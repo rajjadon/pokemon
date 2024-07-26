@@ -26,6 +26,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
@@ -36,6 +37,7 @@ import com.bumptech.glide.integration.compose.GlideImage
 import com.raj.common.error.HttpRequestError
 import com.raj.common.error.PokemonAppError
 import com.raj.common.model.PokemonDetails
+import java.util.Locale
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
@@ -128,8 +130,7 @@ class SampleNetworkErrorProvider : PreviewParameterProvider<PokemonAppError> {
 }
 
 @Composable
-@Preview
-fun ErrorUi(@PreviewParameter(SampleNetworkErrorProvider::class) pokemonAppError: PokemonAppError) {
+fun ErrorUi(pokemonAppError: PokemonAppError) {
     Column(
         modifier = Modifier
             .background(color = MaterialTheme.colorScheme.background)
@@ -138,7 +139,7 @@ fun ErrorUi(@PreviewParameter(SampleNetworkErrorProvider::class) pokemonAppError
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = pokemonAppError.getNetworkErrorMessage(),
+            text = pokemonAppError.getNetworkErrorMessage().uppercase(Locale.getDefault()),
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .fillMaxWidth()
@@ -151,25 +152,10 @@ fun ErrorUi(@PreviewParameter(SampleNetworkErrorProvider::class) pokemonAppError
                 fontWeight = FontWeight.Bold
             )
         )
-        Text(
-            text = pokemonAppError.getErrorCode().toString(),
-            textAlign = TextAlign.Center,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    start = 10.dp, bottom = 16.dp
-                ),
-            style = TextStyle(
-                color = MaterialTheme.colorScheme.onBackground,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Normal
-            )
-        )
     }
 }
 
 @Composable
-@Preview
 fun LoadingUi() {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,

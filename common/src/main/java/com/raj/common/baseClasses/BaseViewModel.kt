@@ -2,34 +2,43 @@ package com.raj.common.baseClasses
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.raj.common.error.PokemonAppError
-import com.raj.common.extension.toSharedFlow
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 open class BaseViewModel : ViewModel() {
 
-    private val _loading = MutableSharedFlow<Boolean>()
-    val loading = _loading.toSharedFlow()
+    private val _loading = MutableSharedFlow<Boolean>(replay = 1)
+    val loading: SharedFlow<Boolean> = _loading.asSharedFlow()
 
-    private val _pokemonAppError = MutableSharedFlow<PokemonAppError>()
-    val pokemonAppError = _pokemonAppError.toSharedFlow()
+    private val _pokemonAppError = MutableSharedFlow<PokemonAppError>(replay = 1)
+    val pokemonAppError: SharedFlow<PokemonAppError> = _pokemonAppError.asSharedFlow()
 
     fun sendLoading(isLoading: Flow<Boolean>) {
-        isLoading.onEach {
-            _loading.emit(it)
-        }.launchIn(viewModelScope)
+        viewModelScope.launch {
+            isLoading.collect {
+                _loading.emit(it)
+            }
+        }
     }
 
     fun sendError(pokemonAppError: Flow<PokemonAppError>) {
-        pokemonAppError.onEach {
-            _pokemonAppError.emit(it)
-        }.launchIn(viewModelScope)
+        viewModelScope.launch {
+            pokemonAppError.collect {
+                _pokemonAppError.emit(it)
+            }
+        }
+    }
+
+    fun sendError(pokemonAppError: PokemonAppError) {
+        viewModelScope.launch {
+            _pokemonAppError.emit(pokemonAppError)
+        }
+    }
+
+    fun setLoading(isLoading: Boolean) {
+        viewModelScope.launch {
+            _loading.emit(isLoading)
+        }
     }
 }
