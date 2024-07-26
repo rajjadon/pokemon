@@ -1,4 +1,4 @@
-package com.raj.datasource.remote.networkHelper
+package com.raj.datasource.remote.network.networkHelper
 
 import android.annotation.SuppressLint
 import android.content.Context

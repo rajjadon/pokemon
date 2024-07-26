@@ -1,9 +1,8 @@
-package com.raj.datasource.remote
+package com.raj.datasource.remote.network
 
 import android.content.Context
 import com.raj.common.qualifiers.ApiConstantEnum
 import com.raj.common.qualifiers.ApiQualifier
-import com.raj.datasource.remote.retrofitIntepceptor.AuthInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -1,4 +1,4 @@
-package com.raj.datasource.remote.baseResponse
+package com.raj.datasource.remote.network.baseResponse
 
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName

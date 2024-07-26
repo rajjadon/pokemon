@@ -2,7 +2,7 @@ package com.raj.common.baseClasses
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.raj.common.error.TrailerAppError
+import com.raj.common.error.PokemonAppError
 import com.raj.common.extension.toSharedFlow
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -13,7 +13,7 @@ open class BaseViewModel : ViewModel() {
     private val _loading = MutableSharedFlow<Boolean>()
     val loading = _loading.toSharedFlow()
 
-    private val _trailerAppError = MutableSharedFlow<TrailerAppError>()
+    private val _trailerAppError = MutableSharedFlow<PokemonAppError>()
     val trailerAppError = _trailerAppError.toSharedFlow()
 
     fun sendLoading(isLoading: Boolean) {
@@ -22,7 +22,7 @@ open class BaseViewModel : ViewModel() {
         }
     }
 
-    fun sendError(trailerAppError: TrailerAppError) {
+    fun sendError(trailerAppError: PokemonAppError) {
         viewModelScope.launch(Dispatchers.IO) {
             _trailerAppError.emit(trailerAppError)
         }

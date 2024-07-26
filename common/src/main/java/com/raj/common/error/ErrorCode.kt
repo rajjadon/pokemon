@@ -377,12 +377,12 @@ enum class HttpRequestErrorCodes(val code: Int) {
 
 }
 
-sealed interface TrailerAppError {
+sealed interface PokemonAppError {
     fun getErrorCode(): Int
     fun getNetworkErrorMessage(): String
 }
 
-sealed class HttpRequestError : TrailerAppError {
+sealed class HttpRequestError : PokemonAppError {
     class SomeThingWentWrong(
         var code: Int, var errorMessage: String = "Some thing went wrong"
     ) : HttpRequestError() {

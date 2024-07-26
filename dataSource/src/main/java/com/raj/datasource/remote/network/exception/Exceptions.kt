@@ -1,4 +1,4 @@
-package com.raj.datasource.remote.exception
+package com.raj.datasource.remote.network.exception
 
 import java.io.IOException
 

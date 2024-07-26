@@ -1,9 +1,9 @@
-package com.raj.datasource.remote
+package com.raj.datasource.remote.network
 
 import com.raj.common.baseClasses.DataState
 import com.raj.common.error.HttpRequestError
 import com.raj.common.error.HttpRequestErrorCodes
-import com.raj.datasource.remote.networkHelper.NetworkHelper
+import com.raj.datasource.remote.network.networkHelper.NetworkHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException

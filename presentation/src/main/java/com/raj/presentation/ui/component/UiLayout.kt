@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.sp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.raj.common.error.HttpRequestError
-import com.raj.common.error.TrailerAppError
+import com.raj.common.error.PokemonAppError
 import com.raj.common.model.PokemonDetails
 
 @OptIn(ExperimentalGlideComposeApi::class)
@@ -80,13 +80,13 @@ fun HomeScreenItem(pokemonDetails: PokemonDetails, onClick: () -> Unit = {}) {
     }
 }
 
-class SampleNetworkErrorProvider : PreviewParameterProvider<TrailerAppError> {
+class SampleNetworkErrorProvider : PreviewParameterProvider<PokemonAppError> {
     override val values = sequenceOf(HttpRequestError.SomeThingWentWrong(500))
 }
 
 @Composable
 @Preview
-fun ErrorUi(@PreviewParameter(SampleNetworkErrorProvider::class) trailerAppError: TrailerAppError) {
+fun ErrorUi(@PreviewParameter(SampleNetworkErrorProvider::class) pokemonAppError: PokemonAppError) {
     Column(
         modifier = Modifier
             .background(color = Color.Gray)
@@ -94,7 +94,7 @@ fun ErrorUi(@PreviewParameter(SampleNetworkErrorProvider::class) trailerAppError
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = trailerAppError.getNetworkErrorMessage(),
+            text = pokemonAppError.getNetworkErrorMessage(),
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .fillMaxWidth()
@@ -108,7 +108,7 @@ fun ErrorUi(@PreviewParameter(SampleNetworkErrorProvider::class) trailerAppError
             )
         )
         Text(
-            text = trailerAppError.getErrorCode().toString(),
+            text = pokemonAppError.getErrorCode().toString(),
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .fillMaxWidth()

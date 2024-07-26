@@ -1,10 +1,10 @@
-package com.raj.datasource.remote
+package com.raj.datasource.remote.network
 
 import com.raj.common.error.HttpRequestError
 import com.raj.common.error.HttpRequestErrorCodes
-import com.raj.common.error.TrailerAppError
+import com.raj.common.error.PokemonAppError
 
-fun SafeApiRequest.getErrorMessage(errorCode: Int, message: String? = null): TrailerAppError {
+fun SafeApiRequest.getErrorMessage(errorCode: Int, message: String? = null): PokemonAppError {
 
     return when (errorCode) {
         HttpRequestErrorCodes.TimeOut.code -> HttpRequestError.TimeOut(

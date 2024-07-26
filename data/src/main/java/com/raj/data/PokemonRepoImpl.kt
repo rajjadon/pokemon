@@ -2,38 +2,42 @@ package com.raj.data
 
 import com.raj.common.baseClasses.DataState
 import com.raj.common.model.PokemonDetails
-import com.raj.datasource.local.PokemonDao
-import com.raj.datasource.remote.SafeApiRequest
-import com.raj.datasource.remote.networkHelper.NetworkHelper
-import com.raj.datasource.remote.networkService.NetworkService
+import com.raj.datasource.local.LocalDataSource
+import com.raj.datasource.remote.RemoteDataSource
+import com.raj.datasource.remote.network.networkHelper.NetworkHelper
 import com.raj.domain.repo.PokemonRepo
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flow
-import timber.log.Timber
 import javax.inject.Inject
 
 class PokemonRepoImpl @Inject constructor(
-    private val safeApiRequest: SafeApiRequest,
-    private val networkHelper: NetworkHelper,
-    private val dao: PokemonDao,
-    private val networkService: NetworkService
+    private val remoteDataSource: RemoteDataSource,
+    private val localDataSource: LocalDataSource,
+    private val networkHelper: NetworkHelper
 ) : PokemonRepo {
     override suspend fun getPokemonDetailsById(id: String): Flow<DataState<PokemonDetails>> = flow {
-        Timber.e("Not yet implemented")
+        val data = if (networkHelper.isNetworkConnected()){
+            remoteDataSource.getPokemonDetailsById(id)
+        }
+        else
+            localDataSource.getPokemonDetailsById(id)
+
+        data.collectLatest{
+            emit(it)
+        }
     }
 
     override suspend fun getAllPokemonDetails(): Flow<DataState<List<PokemonDetails>>>  = flow{
-        //emit(DataState.Loading)
 
-        val f = safeApiRequest.apiRequest { networkService.getPokemonList() }
-
-        val data = if (networkHelper.isNetworkConnected())
-            safeApiRequest.apiRequest { networkService.getPokemonList() }
+        val data = if (networkHelper.isNetworkConnected()){
+            remoteDataSource.getAllPokemonDetails()
+        }
         else
-            DataState.Success(dao.getAllPokemonDetails())
+            localDataSource.getAllPokemonDetails()
 
-        val s = DataState.Success(dao.getAllPokemonDetails())
-
-        Timber.e("Not yet implemented")
+        data.collectLatest {
+            emit(it)
+        }
     }
 }

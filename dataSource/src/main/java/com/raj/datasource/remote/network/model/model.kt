@@ -1,4 +1,11 @@
-package com.raj.datasource.remote.model
+package com.raj.datasource.remote.network.model
+
+import com.raj.common.model.PokemonAbility
+import com.raj.common.model.PokemonAttack
+import com.raj.common.model.PokemonDetails
+import com.raj.common.model.PokemonImage
+import com.raj.common.model.PokemonResistance
+import com.raj.common.model.PokemonWeakness
 
 data class PokemonApiData(
     val abilities: List<Ability>,
@@ -28,7 +35,47 @@ data class PokemonApiData(
     val tcgplayer: Tcgplayer,
     val types: List<String>,
     val weaknesses: List<Weaknesse>
-)
+){
+    fun mapPokemonApiDataToPokemonDetails(): PokemonDetails {
+        return PokemonDetails(
+            id = this.id,
+            name = this.name,
+            type = this.types,
+            subType = this.subtypes,
+            level = this.level,
+            hp = this.hp,
+            image = this.images.let { PokemonImage(it.small, it.large) },
+            attack = this.attacks.map { attack ->
+                PokemonAttack(
+                    convertedEnergyCost = attack.convertedEnergyCost,
+                    name = attack.name,
+                    damage = attack.damage,
+                    text = attack.text,
+                    cost = attack.cost
+                )
+            },
+            weakness = this.weaknesses.map { weakness ->
+                PokemonWeakness(
+                    type = weakness.type,
+                    value = weakness.value
+                )
+            },
+            ability = this.abilities.map { ability ->
+                PokemonAbility(
+                    name = ability.name,
+                    text = ability.text,
+                    type = ability.type
+                )
+            },
+            resistances = this.resistances.map { resistance ->
+                PokemonResistance(
+                    type = resistance.type,
+                    value = resistance.value
+                )
+            }
+        )
+    }
+}
 
 data class Ability(
     val name: String,

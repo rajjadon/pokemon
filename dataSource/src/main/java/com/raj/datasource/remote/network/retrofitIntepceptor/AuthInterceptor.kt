@@ -1,4 +1,4 @@
-package com.raj.datasource.remote.retrofitIntepceptor
+package com.raj.datasource.remote.network.retrofitIntepceptor
 
 import com.raj.common.qualifiers.ApiConstantEnum
 import com.raj.common.qualifiers.ApiQualifier
