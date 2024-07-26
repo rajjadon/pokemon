@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import com.raj.common.model.PokemonDetails
 import com.raj.presentation.ui.component.ErrorUi
 import com.raj.presentation.ui.component.HomeScreenItem
 import com.raj.presentation.ui.component.LoadingUi
@@ -53,7 +54,7 @@ fun HomeScreen(homeViewModel: HomeViewModel, onClick: () -> Unit = {}) {
 
         when {
             isLoading -> LoadingUi()
-            isError != null -> isError?.let { ErrorUi(it) }
+            isError != null -> isError?.let { ErrorUi(pokemonAppError = it) }
             else -> LazyVerticalGrid(
                 columns = GridCells.Fixed(3),
                 modifier = Modifier.padding(top = 10.dp)
