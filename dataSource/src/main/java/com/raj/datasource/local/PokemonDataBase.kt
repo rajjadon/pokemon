@@ -4,7 +4,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.raj.common.Converters
-import com.raj.datasource.model.RoomDbPokemon
+import com.raj.datasource.local.model.RoomDbPokemon
 
 @Database(entities = [RoomDbPokemon::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)

@@ -5,7 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.raj.datasource.model.RoomDbPokemon
+import com.raj.datasource.local.model.RoomDbPokemon
 
 @Dao
 interface PokemonDao {

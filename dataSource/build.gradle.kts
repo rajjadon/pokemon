@@ -23,7 +23,15 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String", "POKEMON_LIST", "${project.properties["POKEMON_LIST"]}")
         }
+        debug {
+
+            buildConfigField("String", "POKEMON_LIST", "${project.properties["POKEMON_LIST"]}")
+        }
+    }
+    buildFeatures{
+        buildConfig = true
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8

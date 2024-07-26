@@ -1,4 +1,4 @@
-package com.raj.data.model
+package com.raj.datasource.remote.model
 
 data class PokemonApiData(
     val abilities: List<Ability>,

@@ -19,8 +19,4 @@ object ProvideAppUrl {
     @Provides
     @ApiQualifier(ApiConstantEnum.ACCESS_TOKEN)
     fun provideAccessToken() = "Bearer"
-
-    @Provides
-    @ApiQualifier(ApiConstantEnum.POKEMON_LIST)
-    fun provideApiKey() = BuildConfig.POKEMON_LIST
 }
