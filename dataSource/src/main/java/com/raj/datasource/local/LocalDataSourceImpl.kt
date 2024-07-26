@@ -6,6 +6,7 @@ import com.raj.common.model.PokemonDetails
 import com.raj.datasource.local.dao.PokemonDao
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import timber.log.Timber
 import javax.inject.Inject
 
 class LocalDataSourceImpl @Inject constructor(
@@ -46,19 +47,33 @@ class LocalDataSourceImpl @Inject constructor(
         try {
             val data = dao.getAllPokemonDetails()
 
-            emit(
-                data?.let {
-                    DataState.Success(it)
-                } ?: run {
-                    DataState.Error(
-                        HttpRequestError.SomeThingWentWrong(
-                            code = 1001,
-                            errorMessage = "SomeThingWentWrong"
+            data?.let {
+                if (it.isNotEmpty())
+                    emit(DataState.Success(it))
+                else {
+                    Timber.e("data not found")
+                    emit(
+                        DataState.Error(
+                            HttpRequestError.SomeThingWentWrong(
+                                code = 1001,
+                                errorMessage = "data not found"
+                            )
                         )
                     )
                 }
-            )
+            } ?: run {
+                Timber.e("data not found")
+                emit(
+                    DataState.Error(
+                        HttpRequestError.SomeThingWentWrong(
+                            code = 1001,
+                            errorMessage = "data not found"
+                        )
+                    )
+                )
+            }
         } catch (e: Exception) {
+            Timber.e(e)
             emit(
                 DataState.Error(
                     HttpRequestError.SomeThingWentWrong(

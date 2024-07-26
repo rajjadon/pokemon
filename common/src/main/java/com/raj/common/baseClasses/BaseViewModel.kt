@@ -2,10 +2,15 @@ package com.raj.common.baseClasses
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.raj.common.error.PokemonAppError
 import com.raj.common.extension.toSharedFlow
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 open class BaseViewModel : ViewModel() {
@@ -16,15 +21,15 @@ open class BaseViewModel : ViewModel() {
     private val _pokemonAppError = MutableSharedFlow<PokemonAppError>()
     val pokemonAppError = _pokemonAppError.toSharedFlow()
 
-    fun sendLoading(isLoading: Boolean) {
-        viewModelScope.launch(Dispatchers.IO) {
-            _loading.emit(isLoading)
-        }
+    fun sendLoading(isLoading: Flow<Boolean>) {
+        isLoading.onEach {
+            _loading.emit(it)
+        }.launchIn(viewModelScope)
     }
 
-    fun sendError(trailerAppError: PokemonAppError) {
-        viewModelScope.launch(Dispatchers.IO) {
-            _pokemonAppError.emit(trailerAppError)
-        }
+    fun sendError(pokemonAppError: Flow<PokemonAppError>) {
+        pokemonAppError.onEach {
+            _pokemonAppError.emit(it)
+        }.launchIn(viewModelScope)
     }
 }

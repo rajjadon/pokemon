@@ -23,7 +23,7 @@ import com.raj.presentation.ui.component.HomeScreenItem
 import com.raj.presentation.ui.component.LoadingUi
 
 @Composable
-fun HomeScreen(homeViewModel: HomeViewModel) {
+fun HomeScreen(homeViewModel: HomeViewModel, onClick: () -> Unit = {}) {
 
     val data =
         homeViewModel.pokemonList.collectAsState(initial = emptyList()).value
@@ -50,7 +50,7 @@ fun HomeScreen(homeViewModel: HomeViewModel) {
             ) {
                 items(data.size) { position ->
                     val pokemon = data[position]
-                    HomeScreenItem(pokemon)
+                    HomeScreenItem(pokemon, onClick = onClick)
                 }
             }
     }

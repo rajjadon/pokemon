@@ -1,5 +1,6 @@
 package com.raj.presentation.ui.component
 
+import android.graphics.drawable.Icon
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -10,6 +11,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Face
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -42,41 +45,81 @@ fun HomeScreenItem(pokemonDetails: PokemonDetails, onClick: () -> Unit = {}) {
     ) {
 
         Box(contentAlignment = Alignment.BottomEnd) {
+            val image = pokemonDetails.image?.large ?: run { pokemonDetails.image?.small ?: run { Icons.Filled.Face } }
             GlideImage(
-                model = pokemonDetails.image?.large,
-                contentDescription = "movie banner",
+                model = image,
+                contentDescription = "pokemon banner",
                 modifier = Modifier
                     .clip(shape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp))
             )
         }
 
-        Text(
-            text = pokemonDetails.name.toString(),
-            maxLines = 1,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    top = 10.dp, start = 10.dp
-                ),
-            style = TextStyle(
-                color = Color.White,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold
+        pokemonDetails.name?.let {
+            Text(
+                text = "Name: $it",
+                maxLines = 1,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        top = 10.dp, start = 10.dp
+                    ),
+                style = TextStyle(
+                    color = Color.White,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold
+                )
             )
-        )
-        Text(
-            text = pokemonDetails.hp.toString(),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    start = 10.dp, bottom = 16.dp
-                ),
-            style = TextStyle(
-                color = Color.White,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Normal
+        }
+
+        pokemonDetails.type?.joinToString(separator = ", ")?.let {
+            Text(
+                text = "Type: $it",
+                maxLines = 1,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        top = 10.dp, start = 10.dp
+                    ),
+                style = TextStyle(
+                    color = Color.White,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold
+                )
             )
-        )
+        }
+
+        pokemonDetails.level?.let {
+            Text(
+                text = ":Level: $it",
+                maxLines = 1,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        top = 10.dp, start = 10.dp
+                    ),
+                style = TextStyle(
+                    color = Color.White,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            )
+        }
+
+        pokemonDetails.hp?.let {
+            Text(
+                text = "Hp: $it",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        start = 10.dp, bottom = 16.dp
+                    ),
+                style = TextStyle(
+                    color = Color.White,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Normal
+                )
+            )
+        }
     }
 }
 

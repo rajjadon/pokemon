@@ -22,7 +22,7 @@ class HomeViewModel @Inject constructor(private val getPokemonListUseCase: GetPo
             baseViewModel = this,
             onResult = {
                 _pokemonList.emit(it)
-            }
+            },
         )
     }
 }

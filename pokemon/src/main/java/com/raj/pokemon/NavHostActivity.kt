@@ -9,6 +9,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -38,7 +39,7 @@ class NavHostActivity : ComponentActivity() {
             PokemonTheme  {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    color = Color.Gray
                 ) {
                     navController = rememberNavController()
                     NavigationGraph()
@@ -58,12 +59,14 @@ class NavHostActivity : ComponentActivity() {
             composable(NavigationScreens.HomeScreen.route) {
                 val homeViewModel: HomeViewModel = hiltViewModel()
                 homeViewModel.fetchPokemon()
-                HomeScreen(homeViewModel)
+                HomeScreen(homeViewModel, onClick = {
+                    showStringToast("clicked")
+                })
             }
             composable(
-                route = NavigationScreens.DetailsScreen.route + "/{name}",
+                route = NavigationScreens.DetailsScreen.route + "/{id}",
                 arguments = listOf(
-                    navArgument("name") {
+                    navArgument("id") {
                         type = NavType.StringType
                         defaultValue = "Some Default"
                         nullable = true
