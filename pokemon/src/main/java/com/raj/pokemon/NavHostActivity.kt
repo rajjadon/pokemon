@@ -3,6 +3,7 @@ package com.raj.pokemon
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -15,6 +16,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.raj.common.baseClasses.BaseViewModel
+import com.raj.common.extension.collectSharedFlowData
+import com.raj.common.extension.showStringToast
 import com.raj.pokemon.navigation.NavigationScreens
 import com.raj.pokemon.ui.theme.PokemonTheme
 import com.raj.presentation.home.HomeScreen
@@ -23,6 +27,8 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class NavHostActivity : ComponentActivity() {
+
+    private val baseViewModel: BaseViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +41,10 @@ class NavHostActivity : ComponentActivity() {
                     NavigationGraph()
                 }
             }
+        }
+
+        collectSharedFlowData(baseViewModel.pokemonAppError) {
+            showStringToast(it.getNetworkErrorMessage())
         }
     }
 

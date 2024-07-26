@@ -13,8 +13,8 @@ open class BaseViewModel : ViewModel() {
     private val _loading = MutableSharedFlow<Boolean>()
     val loading = _loading.toSharedFlow()
 
-    private val _trailerAppError = MutableSharedFlow<PokemonAppError>()
-    val trailerAppError = _trailerAppError.toSharedFlow()
+    private val _pokemonAppError = MutableSharedFlow<PokemonAppError>()
+    val pokemonAppError = _pokemonAppError.toSharedFlow()
 
     fun sendLoading(isLoading: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -24,7 +24,7 @@ open class BaseViewModel : ViewModel() {
 
     fun sendError(trailerAppError: PokemonAppError) {
         viewModelScope.launch(Dispatchers.IO) {
-            _trailerAppError.emit(trailerAppError)
+            _pokemonAppError.emit(trailerAppError)
         }
     }
 }

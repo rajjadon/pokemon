@@ -19,6 +19,7 @@ retrofit = "2.9.0"
 okhttp_version = '5.0.0-alpha.11'
 glide-version = '1.0.0-alpha.1'
 ksp_version = '1.0.23'
+uiTooling = "1.6.8"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -71,6 +72,7 @@ room-compiler = {group = "androidx.room", name="room-compiler", version.ref="roo
 
 # Glide
 glide = {group="com.github.bumptech.glide", name="compose", version.ref="glide-version"}
+ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "uiTooling" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -63,5 +63,6 @@ dependencies {
 
     // hilt
     api(libs.hilt.android)
+    debugImplementation(libs.ui.tooling)
     kapt(libs.hilt.android.compiler)
 }
