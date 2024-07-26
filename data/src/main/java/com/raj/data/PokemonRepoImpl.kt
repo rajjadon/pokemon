@@ -6,9 +6,12 @@ import com.raj.datasource.local.LocalDataSource
 import com.raj.datasource.remote.RemoteDataSource
 import com.raj.datasource.remote.network.networkHelper.NetworkHelper
 import com.raj.domain.repo.PokemonRepo
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.internal.ChannelFlow
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class PokemonRepoImpl @Inject constructor(
@@ -23,7 +26,7 @@ class PokemonRepoImpl @Inject constructor(
         else
             localDataSource.getPokemonDetailsById(id)
 
-        data.collectLatest{
+        data.onEach {
             emit(it)
         }
     }
@@ -36,7 +39,7 @@ class PokemonRepoImpl @Inject constructor(
         else
             localDataSource.getAllPokemonDetails()
 
-        data.collectLatest {
+        data.onEach {
             emit(it)
         }
     }
