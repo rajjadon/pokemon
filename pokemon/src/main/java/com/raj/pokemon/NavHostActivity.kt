@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -29,6 +30,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class NavHostActivity : ComponentActivity() {
 
     private val baseViewModel: BaseViewModel by viewModels()
+    private lateinit var navController : NavHostController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +40,7 @@ class NavHostActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    navController = rememberNavController()
                     NavigationGraph()
                 }
             }
@@ -51,7 +54,6 @@ class NavHostActivity : ComponentActivity() {
     @Preview
     @Composable
     fun NavigationGraph() {
-        val navController = rememberNavController()
         NavHost(navController, startDestination = NavigationScreens.HomeScreen.route) {
             composable(NavigationScreens.HomeScreen.route) {
                 val homeViewModel: HomeViewModel = hiltViewModel()

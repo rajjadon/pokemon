@@ -20,11 +20,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.raj.presentation.ui.component.HomeScreenItem
+import com.raj.presentation.ui.component.LoadingUi
 
 @Composable
 fun HomeScreen(homeViewModel: HomeViewModel) {
+
     val data =
         homeViewModel.pokemonList.collectAsState(initial = emptyList()).value
+
+    val isLoading = homeViewModel.loading.collectAsState(initial = false)
 
     Column(Modifier.background(color = Color.Gray)) {
         Spacer(modifier = Modifier.statusBarsPadding())
@@ -37,14 +41,17 @@ fun HomeScreen(homeViewModel: HomeViewModel) {
                 .fillMaxWidth()
         )
 
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(3),
-            modifier = Modifier.padding(top = 10.dp)
-        ) {
-            items(data.size) { position ->
-                val pokemon = data[position]
-                HomeScreenItem(pokemon)
+        if (isLoading.value)
+            LoadingUi()
+        else
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(3),
+                modifier = Modifier.padding(top = 10.dp)
+            ) {
+                items(data.size) { position ->
+                    val pokemon = data[position]
+                    HomeScreenItem(pokemon)
+                }
             }
-        }
     }
 }
